@@ -1,0 +1,38 @@
+---
+title: 'Chapter 5: Data Transformation'
+author: "Kylie"
+date: "2019-02-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Summary notes
+
+This chapter introduces the dplyr package (part of the tidyverse). Five key dplyr packages are:
+
+* `filter()`: Pick observations by their values (i.e. select rows containing the require values).  
+Example: `new_tibble <- (tibble, variable_1 == "string")`  
+Comparison operators that can be used: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal).
+For numbers it is better to use `near()` than `==`.  
+Combine multiple arguments with `&` (and), `|` (or), `!` (not), and %in%. Another useful function is `between()`, which is a shortcut for `x >= left & x <= right`.
+Example: `new_tibble <- (tibble, variable_1 %in% c("string1", "string2"))`
+
+* `arrange()`
+
+* `select()`
+
+* `mutate()`
+
+* `summarise()`
+
+```{r packages, results='hide', message=FALSE, warning=FALSE, echo = FALSE}
+#install.packages("nycflights13")
+#install.packages("tidyverse")
+
+library(nycflights13)
+library(tidyverse)
+```
+
