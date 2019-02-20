@@ -2,7 +2,9 @@
 title: 'Chapter 5: Data Transformation'
 author: "Kylie"
 date: "2019-02-20"
-output: html_document
+output:
+  html_document:
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -17,8 +19,10 @@ This chapter introduces the dplyr package (part of the tidyverse). Five key dply
 Example: `new_tibble <- (tibble, variable_1 == "string")`  
 Comparison operators that can be used: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal).
 For numbers it is better to use `near()` than `==`.  
-Combine multiple arguments with `&` (and), `|` (or), `!` (not), and %in%. Another useful function is `between()`, which is a shortcut for `x >= left & x <= right`.
+Combine multiple arguments with `&` (and), `|` (or), `!` (not), and %in%. Another useful function is `between(x, left, right)`, which is a shortcut for `x >= left & x <= right`.
 Example: `new_tibble <- (tibble, variable_1 %in% c("string1", "string2"))`
+
+`is.na()`
 
 * `arrange()`
 
@@ -28,11 +32,55 @@ Example: `new_tibble <- (tibble, variable_1 %in% c("string1", "string2"))`
 
 * `summarise()`
 
-```{r packages, results='hide', message=FALSE, warning=FALSE, echo = FALSE}
+```{r packages}
 #install.packages("nycflights13")
 #install.packages("tidyverse")
 
 library(nycflights13)
 library(tidyverse)
+
+nycflights13::flights
+
 ```
 
+## 5.2.4 Exercises
+
+1. Find all flights that
+  i) Had an arrival delay of two or more hours  
+  ```{r }
+filter(flights, arr_delay >= 2*60)
+```
+  
+  ii) Flew to Houston (`IAH` or `HOU`)  
+  ```{r }
+  filter(flights, dest %in% c("IAH", "HOU"))
+  ```
+  
+  iii) Were operated by United, American, or Delta  
+  ```{r }
+  filter(flights, carrier %in% c("UA", "AA", "DL"))
+  ```
+  
+  iv) Departed in summer (July, August, and September)  
+  ```{r }
+  filter(flights, month %in% c(7,8,9))
+  ```
+  
+  v) Arrived more than two hours late, but didn’t leave late  
+  ```{r }
+  filter(flights, arr_delay > 2*60 & dep_delay <= 0)
+  ```
+  
+  vi) Were delayed by at least an hour, but made up over 30 minutes in flight  
+  ```{r }
+  filter(flights, dep_delay >= 60 & arr_delay < 30)
+  ```
+  
+  vii) Departed between midnight and 6am (inclusive)  
+  ```{r }
+  filter(flights, dep_time >= 0 & dep_time <= 6)
+  ```
+  or
+  ```{r }
+  filter(flights, between(dep_time, 0, 6))
+  ```
